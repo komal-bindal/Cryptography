@@ -166,20 +166,20 @@ class MultiplicativeCipher {
         return result1.toString();
     }
 
-    static int modInverse(int a, int m) {
+    static int modInverse(int n, int m) {
         int m0 = m;
         int y = 0, x = 1;
         if (m == 1)
             return 0;
-        while (a > 1) {
+        while (n > 1) {
             // q is quotient
             if (m == 0) {
                 return -1;
             }
-            int q = a / m;
+            int q = n / m;
             int t = m;
-            m = a % m;
-            a = t;
+            m = n % m;
+            n = t;
             t = y;
             y = x - q * y;
             x = t;

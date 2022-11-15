@@ -112,10 +112,10 @@ public class PlayfairCipher {
 
     }
 
-    private static HashMap<Character,int[]> createHashMap(Character[][] keyMatrix) {
+    private static HashMap<Character, int[]> createHashMap(Character[][] keyMatrix) {
         HashMap<Character, int[]> map = new HashMap<>();
-        for(int i = 0 ; i < keyMatrix.length; i++){
-            for(int j =0 ; j < keyMatrix[i].length; j++){
+        for (int i = 0; i < keyMatrix.length; i++) {
+            for (int j = 0; j < keyMatrix[i].length; j++) {
                 map.put(keyMatrix[i][j], new int[]{i, j});
             }
         }
@@ -127,23 +127,23 @@ public class PlayfairCipher {
         str = str.toUpperCase();
         StringBuilder plainText = new StringBuilder(str);
         int size = 0;
-        for(int i = 0; i < str.length(); i++){
-            if(str.charAt(i) != ' '){
+        for (int i = 0; i < str.length(); i++) {
+            if (str.charAt(i) != ' ') {
                 size++;
             }
         }
-        if(size %2 ==1){
+        if (size % 2 == 1) {
             plainText.append("X");
         }
         for (int i = 0; i < plainText.length(); i++) {
-            while(plainText.charAt(i) == ' '){
+            while (plainText.charAt(i) == ' ') {
                 res.append(plainText.charAt(i));
                 i++;
 //                System.out.println(plainText.charAt(i-1) + " append" );
             }
             Character first = plainText.charAt(i);
             i++;
-            while(plainText.charAt(i) == ' '){
+            while (plainText.charAt(i) == ' ') {
                 res.append(plainText.charAt(i));
                 i++;
 //                System.out.println(plainText.charAt(i-1) + " append2" );
@@ -151,16 +151,16 @@ public class PlayfairCipher {
             }
             Character second = plainText.charAt(i);
             int[] arr = map.get(first);
-            int r1 = arr[0] , c1 = arr[1];
+            int r1 = arr[0], c1 = arr[1];
             arr = map.get(second);
             int r2 = arr[0], c2 = arr[1];
-            if(r1 == r2){
-                res.append(keyMatrix[r1][(c1+1)%5]);
-                res.append(keyMatrix[r1][(c2+1)%5]);
-            }else if(c1==c2){
-                res.append(keyMatrix[(r1+1)%5][c1]);
-                res.append(keyMatrix[(r2+1)%5][c2]);
-            }else{
+            if (r1 == r2) {
+                res.append(keyMatrix[r1][(c1 + 1) % 5]);
+                res.append(keyMatrix[r1][(c2 + 1) % 5]);
+            } else if (c1 == c2) {
+                res.append(keyMatrix[(r1 + 1) % 5][c1]);
+                res.append(keyMatrix[(r2 + 1) % 5][c2]);
+            } else {
                 res.append(keyMatrix[r1][c2]);
                 res.append(keyMatrix[r2][c1]);
 
@@ -174,35 +174,35 @@ public class PlayfairCipher {
     private static Character[][] generateKey(String key) {
         Character[][] matrix = new Character[5][5];
         int p = 0;
-        int r =0, c =0;
+        int r = 0, c = 0;
         key = key.toUpperCase();
         HashSet<Character> s = new HashSet<>();
         String alphabets = "ABCDEFGHIKLMNOPQRSTUVWXYZ";
-        for(int i =0; i < key.length(); i++){
-            if(s.contains(key.charAt(i)) || key.charAt(i) == 'J'){
+        for (int i = 0; i < key.length(); i++) {
+            if (s.contains(key.charAt(i)) || key.charAt(i) == 'J') {
                 continue;
-            }else{
+            } else {
                 s.add(key.charAt(i));
-                r = r%5;
-                c=c%5;
+                r = r % 5;
+                c = c % 5;
                 matrix[r][c] = key.charAt(i);
                 c++;
             }
-            if(c==5){
+            if (c == 5) {
                 r++;
             }
         }
-        for(int i =0; i < alphabets.length(); i++){
-            if(s.contains(alphabets.charAt(i))){
+        for (int i = 0; i < alphabets.length(); i++) {
+            if (s.contains(alphabets.charAt(i))) {
                 continue;
-            }else{
+            } else {
                 s.add(alphabets.charAt(i));
-                r = r%5;
-                c=c%5;
+                r = r % 5;
+                c = c % 5;
                 matrix[r][c] = alphabets.charAt(i);
                 c++;
             }
-            if(c==5){
+            if (c == 5) {
                 r++;
             }
         }
